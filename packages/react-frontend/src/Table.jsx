@@ -44,5 +44,11 @@ function Table(props) {
             />
         </table>
     );
+    function handleSubmit(person) {
+  // do something
+}
+
+root.render(<MyApp handleSubmit={handleSubmit} />);
+
 }
 export default Table;
