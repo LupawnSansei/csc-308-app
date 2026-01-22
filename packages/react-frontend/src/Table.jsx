@@ -5,6 +5,7 @@ function TableHeader() {
         <tr>
             <th>Name</th>
             <th>Job</th>
+            <th>Id</th>
             <th>Remove</th>
         </tr>
         </thead>
@@ -17,8 +18,9 @@ function TableBody(props) {
                 <tr key={index}>
                     <td>{row.name}</td>
                     <td>{row.job}</td>
+                    <td>{row.id}</td>
                     <td>
-                        <button onClick={() => props.removeCharacter(index)}>
+                        <button onClick={() => props.removeCharacter(index, row.id)}>
                             Delete
                         </button>
                     </td>
@@ -44,11 +46,5 @@ function Table(props) {
             />
         </table>
     );
-    function handleSubmit(person) {
-  // do something
-}
-
-root.render(<MyApp handleSubmit={handleSubmit} />);
-
 }
 export default Table;

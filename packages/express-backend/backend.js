@@ -1,8 +1,10 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 app.use(express.json());
 
 app.listen(port, () => {
@@ -82,7 +84,9 @@ app.get("/users/:id", (req, res) => {
 
 
 
-
+const generateId = () => {
+    return Math.random().toString(36).slice(2, 8);
+};
     
 const addUser = (user) => {
     users["users_list"].push(user);
@@ -90,12 +94,13 @@ const addUser = (user) => {
     return user;
 };
 
+
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
+    const userWithID = {...userToAdd, id: generateId()};
+    addUser(userWithID);
 
-    addUser(userToAdd);
-
-    res.send();
+    res.status(201).send(userWithID);
 
 });
 
@@ -112,14 +117,28 @@ const deleteUser = (id) =>
     return deleted;
 
 };
+/*
 app.delete("/users", (req, res) => {
     const id = req.body.id; 
     const deleted = deleteUser(id);
     if (deleted === null) {
         res.status(404).send("Resource not found.");
     } else {
-        res.send(deleted);
+        res.status(204).send(deleted);
     }
 });
-
+*/
+app.delete("/users/:id", (req,res)=>
+    {
+        console.log(req.params.id);
+        const id = req.params.id;
+        
+        let result = deleteUser(id);
+        if (result === null) {
+        res.status(404).send("Resource not found.");
+    } else {
+         res.status(204).send();
+    }
+        
+});
 
