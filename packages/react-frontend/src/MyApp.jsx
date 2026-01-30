@@ -7,6 +7,10 @@ const [characters, setCharacters] = useState([]);
 
 function removeOneCharacter(index, id) {
     console.log("Deleting id: ", id)
+        if (!id) {
+            console.log("Missing id for delete.");
+            return;
+        }
         fetch(`http://localhost:8000/users/${id}`, {method: "DELETE"})
         .then((res)=> 
             {
@@ -24,7 +28,9 @@ function removeOneCharacter(index, id) {
 
         postUser(person)
   .then((res) => res.json())
-  .then((createdUser) => setCharacters([...characters, createdUser]))
+  .then(() => fetchUsers())
+  .then((res) => res.json())
+  .then((json) => setCharacters(json["users_list"]))
   .catch((error) => console.log(error));
 
     }

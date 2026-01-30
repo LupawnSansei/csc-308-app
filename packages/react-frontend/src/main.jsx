@@ -10,6 +10,9 @@ const container = document.getElementById("root");
 // Create a root
 const root = ReactDOMClient.createRoot(container);
 
+function handleSubmit(person) {
+  console.log("New row:", person);
+}
 // Initial render:
-root.render(<MyApp />);
+root.render(<MyApp handleSubmit={handleSubmit}/>);
 
